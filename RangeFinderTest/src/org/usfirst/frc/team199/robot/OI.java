@@ -65,7 +65,7 @@ public class OI {
 
 			quickTurnButton = new JoystickButton(rightJoystick, 2);
 //			quickTurnButton.whileHeld(new AutoTurn(180));
-			quickTurnButton.whileHeld(new RangefinderDrive());
+			quickTurnButton.whileHeld(new RangefinderDrive(60));
 
 			openClawButton2 = new JoystickButton(rightJoystick, 5);
 			openClawButton2.whenPressed(new OpenClaw());

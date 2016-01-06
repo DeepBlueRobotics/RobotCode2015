@@ -12,12 +12,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RangefinderDrive extends Command {
 	
 	boolean targetAcquired;
+	// This variable target is the stop distance away from the 
+	// object in front
 	final double target;
 	
     public RangefinderDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	target = 10;
+    	target = 12;
     	requires(Robot.drivetrain);
     }
     
@@ -31,17 +33,16 @@ public class RangefinderDrive extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	targetAcquired = false; 
+    	Robot.drivetrain.setRangefinderTarget(target);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Robot.drivetrain.getRangefinderDistance() <= target);
-    		targetAcquired = true;
-    	
-    	double speed = targetAcquired ? Robot.oi.getLeftJoystick().getY() : 0;
-    	Robot.drivetrain.drive(speed, 0,
-				 	 Robot.oi.getRightJoystick().getX());
-    	
+//    	if (Robot.drivetrain.getRangefinderDistance() <= target){
+//    		Robot.drivetrain.drive(0, 0, Robot.oi.rightJoystick.getX());
+//    	}else{
+    		Robot.drivetrain.updateRangefinder(Robot.oi.rightJoystick.getX());
+//    	}
     	SmartDashboard.putNumber("Rangefinder", Robot.drivetrain.getRangefinderVoltage());
     	SmartDashboard.putNumber("Distance", Robot.drivetrain.getRangefinderDistance());
     }
@@ -53,6 +54,7 @@ public class RangefinderDrive extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drivetrain.drive(0, 0, 0);
     }
 
     // Called when another command which requires one or more of the same

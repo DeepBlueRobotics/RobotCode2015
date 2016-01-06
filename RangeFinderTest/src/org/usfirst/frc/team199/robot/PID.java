@@ -52,12 +52,12 @@ public class PID {
 	 */
 	public void update(double newValue) {
 		kP = Preferences.getDouble(name + "_kP");
-		kI = Preferences.getDouble(name + "_kI");
+		kI = 0;//Preferences.getDouble(name + "_kI");
 		kD = Preferences.getDouble(name + "_kD");
 		kF = Preferences.getDouble(name + "_kF");
 		sensorValue = newValue;
 		interval = timer.get();
-		input = sensorValue * Preferences.getDouble(name + "SensorRatio") - offset;
+		input = sensorValue; //* Preferences.getDouble(name + "SensorRatio") - offset;
 		lastError = error;
 		error = target - input;
 		if (Math.abs(output) < Preferences.getDouble(name + "IntegralLimit")
@@ -68,6 +68,12 @@ public class PID {
 		output = kP * error + kI * totalError + kD * rate;
 		timer.reset();
 		displayData();
+		if(!this.name.equals("DriveDistance")) return;
+		SmartDashboard.putNumber("kP value", kP);
+		SmartDashboard.putNumber("input value", input);
+		SmartDashboard.putNumber("target value", target);
+		SmartDashboard.putNumber("output value", output);
+		SmartDashboard.putNumber("error value", error);
 	}
 
 	/**

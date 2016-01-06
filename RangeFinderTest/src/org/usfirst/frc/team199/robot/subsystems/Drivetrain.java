@@ -400,7 +400,17 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public double getRangefinderDistance() {
-		double currentValue = getRangefinderVoltage()*1024/12.7;
+		double currentValue = getRangefinderVoltage()/.012;
 		return currentValue;
 	}
+	
+	public void setRangefinderTarget(double target) { // PID
+		distancePID.setTarget(target);
+	}
+	
+	public void updateRangefinder(double angle) {
+		distancePID.update(getRangefinderDistance());
+		drive(-distancePID.getOutput(),0,angle);
+	}
+	
 }

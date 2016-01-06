@@ -78,7 +78,7 @@ public class RobotMap {
         drivetrainRightLineReader = new AnalogInput(3);
         LiveWindow.addSensor("Drivetrain", "RightLineReader", drivetrainRightLineReader);
         
-        drivetrainRangefinder = new AnalogInput(4);
+        drivetrainRangefinder = new AnalogInput(1);
         LiveWindow.addSensor("Drivetrain", "Rangefinder", drivetrainRangefinder);
         
         elevatorMotor1 = new VictorSP(3);
