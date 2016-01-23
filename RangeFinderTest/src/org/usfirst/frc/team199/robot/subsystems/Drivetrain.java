@@ -3,10 +3,18 @@ package org.usfirst.frc.team199.robot.subsystems;
 import org.usfirst.frc.team199.robot.PID;
 import org.usfirst.frc.team199.robot.Preferences;
 import org.usfirst.frc.team199.robot.RobotMap;
-import org.usfirst.frc.team199.robot.commands.*;
+import org.usfirst.frc.team199.robot.commands.Drive;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogTrigger;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -26,6 +34,14 @@ public class Drivetrain extends Subsystem {
 	AnalogInput leftLineReader = RobotMap.drivetrainLeftLineReader;
 	AnalogInput rightLineReader = RobotMap.drivetrainRightLineReader;
 	AnalogInput rangefinder = RobotMap.drivetrainRangefinder;
+	
+	SendableChooser chooser = new SendableChooser();
+	
+	public Drivetrain(){
+		chooser.addDefault("option1", "1");
+		chooser.addObject("option2", "2");
+		SmartDashboard.putData("Chooser", chooser);
+	}
 	
 	AnalogTrigger leftLineReadTrigger = RobotMap.drivetrainLeftLineReadTrigger;
 	AnalogTrigger rightLineReadTrigger = RobotMap.drivetrainRightLineReadTrigger;
@@ -58,6 +74,10 @@ public class Drivetrain extends Subsystem {
 	 * @param turn - Clockwise (+)/counterclockwise (-)
 	 */
 	public void drive(double speed, double slide, double turn) {
+		if (chooser.getSelected().equals("2")) {
+			robotDrive.arcadeDrive(0,0);
+			return;
+		}
 		robotDrive.arcadeDrive(-speed, turn);
 		slideMotor.set(slide);
 	}

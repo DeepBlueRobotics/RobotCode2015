@@ -40,6 +40,7 @@ public class Robot extends IterativeRobot {
         oi = new OI();
 
         SmartDashboard.putData(Scheduler.getInstance());
+        SmartDashboard.putData("Drivetrain", drivetrain);
         
         chooser.addDefault("No Auto", "none");
         chooser.addObject("Drive Forward", "drive");
